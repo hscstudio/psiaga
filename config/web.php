@@ -11,10 +11,10 @@ $config = [
          'class' => '\hscstudio\mimin\components\AccessControl',
          'allowActions' => [
             'site/*',
-            'debug/*',
-            'mimin/*', // hapus ketika production
-            'gii/*', // hapus ketika production
-            '*',
+            //'debug/*',
+            //'mimin/*', // hapus ketika production
+            //'gii/*', // hapus ketika production
+            //'*',
         ],
     ],
     'modules' => [

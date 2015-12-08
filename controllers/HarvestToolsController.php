@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Tools;
 use app\models\HarvestTools;
 use app\models\HarvestToolsSearch;
 use yii\web\Controller;
@@ -32,7 +33,13 @@ class HarvestToolsController extends Controller
      */
     public function actionIndex()
     {
+        $state_id = Yii::$app->user->identity->state_id;
         $searchModel = new HarvestToolsSearch();
+        if($state_id>0){
+            $searchModel = new HarvestToolsSearch([
+              'state_id'=>$state_id
+            ]);
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,15 +65,26 @@ class HarvestToolsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($tools_id=0)
     {
         $model = new HarvestTools();
+        $model->state_id = Yii::$app->user->identity->state_id;
+        $model->year = date('Y');
+        if(in_array(date('m'),[10,11,12])) $model->quarter = 4;
+        if(in_array(date('m'),[ 7, 8, 9])) $model->quarter = 3;
+        if(in_array(date('m'),[ 4, 5, 6])) $model->quarter = 2;
+        if(in_array(date('m'),[ 1, 2, 1])) $model->quarter = 1;
+        if($tools_id>0){
+          $tools = Tools::findOne($tools_id);
+          $model->tools_id = $tools_id;
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'tools' => $tools,
             ]);
         }
     }
@@ -80,12 +98,15 @@ class HarvestToolsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        if($model->tools_id>0){
+          $tools = Tools::findOne($model->tools_id);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'tools' => $tools,
             ]);
         }
     }

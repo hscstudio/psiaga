@@ -3,6 +3,7 @@
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
+echo 'Current PHP version: ' . phpversion();
 ?>
 
 <script>

@@ -33,7 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
-            'type_plant_id',
+            [
+              'attribute' => 'type_plant_id',
+              'format' => 'raw',
+              'value' => function($data){
+                if($data->type_plant_id>0)
+                  return \app\models\TypePlant::findOne($data->type_plant_id)->name;
+                else
+                  return "-";
+              }
+            ],
             'name',
             'sort',
             // 'created_at',

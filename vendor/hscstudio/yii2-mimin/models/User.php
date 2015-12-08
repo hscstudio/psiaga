@@ -56,6 +56,7 @@ class User extends \yii\db\ActiveRecord
             }, 'whenClient' => "function (attribute, value) {
                 return ($('#user-new_password').val().length>0);
             }"],
+            [['state_id','status'], 'safe'],
       			//['username', 'filter', 'filter' => 'trim'],
             //['username', 'unique', 'targetClass' => '\app\models\User', 'message' => 'This username has already been taken.'],
         ];
@@ -109,6 +110,16 @@ class User extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AuthAssignment::className(), [
           'user_id' => 'id',
+        ]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getState()
+    {
+        return $this->hasOne(app\models\State::className(), [
+          'id' => 'state_id',
         ]);
     }
 }

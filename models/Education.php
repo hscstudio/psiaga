@@ -52,6 +52,7 @@ class Education extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 100],
+            [['unit'], 'string', 'max' => 50],
         ];
     }
 
@@ -63,6 +64,7 @@ class Education extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'ID'),
             'name' => Yii::t('app', 'Name'),
+            'unit' => Yii::t('app', 'Unit'),
             'sort' => Yii::t('app', 'Sort'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

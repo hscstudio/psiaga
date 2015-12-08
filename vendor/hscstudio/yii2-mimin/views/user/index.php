@@ -60,6 +60,19 @@ $this->params['breadcrumbs'][] = $this->title;
               }
             ],
             [
+              'attribute' => 'state_id',
+              'format' => 'raw',
+              'options' => [
+                'width' => '80px',
+              ],
+              'value' => function($data){
+                if($data->state_id>0)
+                  return \app\models\State::findOne($data->state_id)->name;
+                else
+                  return "-";
+              }
+            ],
+            [
               'attribute' => 'created_at',
               'format' => ['date','php:d M Y H:i:s'],
               'options' => [

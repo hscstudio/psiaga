@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\TypePlant;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Plant */
@@ -12,7 +15,24 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'type_plant_id')->textInput() ?>
+    <?php
+    $data = ArrayHelper::map(
+      TypePlant::find()
+        ->select([
+          'id','name',
+        ])
+        ->asArray()
+        ->all(), 'id', 'name');
+
+    echo $form->field($model, 'type_plant_id')->widget(Select2::classname(), [
+      'data' => $data,
+      'options' => [
+        'placeholder' => 'Pilih Type Plant ...',
+      ],
+      'pluginOptions' => [
+        'allowClear' => true,
+      ],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

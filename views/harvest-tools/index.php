@@ -26,60 +26,128 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', '<span class=\'glyphicon glyphicon-plus-sign\'></span>  Create Harvest Tools'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php
+    $state_id = Yii::$app->user->identity->state_id;
+    $columns[] = ['class' => 'yii\grid\SerialColumn'];
+
+    $columns[] = [
+      'attribute' => 'tools_id',
+      'format' => 'raw',
+      'value' => function($data){
+        if($data->tools_id>0)
+          return \app\models\Tools::findOne($data->tools_id)->name;
+        else
+          return "-";
+      }
+    ];
+
+    if($state_id>0){
+
+    }
+    else{
+      $columns[] = [
+        'attribute' => 'state_id',
+        'format' => 'raw',
+        'value' => function($data){
+          if($data->state_id>0)
+            return \app\models\State::findOne($data->state_id)->name;
+          else
+            return "-";
+        }
+      ];
+    }
+
+    $columns[] = [
+      'attribute' => 'year',
+      'headerOptions' => [
+          'style' => 'width:75px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+    ];
+
+    $columns[] = [
+      'attribute' => 'quarter',
+      'headerOptions' => [
+          'style' => 'width:75px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+    ];
+
+    $columns[] = [
+      'attribute' => 'param',
+      'headerOptions' => [
+          'style' => 'width:75px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+    ];
+
+    /*
+    $columns[] = [
+      'attribute' => 'note',
+      'headerOptions' => [
+          'style' => 'width:75px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+    ];
+    */
+
+    $columns[] = [
+      'attribute'=>'updated_at',
+      'headerOptions' => [
+          'style' => 'width:125px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+      'filter'=>false,
+      'format'=>['date','php:d/m/y H:i'],
+    ];
+
+    $columns[] = [
+      'attribute'=>'updated_by',
+      'headerOptions' => [
+          'style' => 'width:100px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+      'filter'=>false,
+      'value'=>function($data){
+          return @\app\models\User::findOne($data->updated_by)->username;
+      }
+    ];
+
+    $columns[] =[
+      'class' => 'yii\grid\ActionColumn',
+      'header' => 'Actions',
+      'headerOptions' => [
+          'style' => 'width:100px;',
+          'class' => 'text-center',
+      ],
+      'contentOptions' => [
+          'class' => 'text-center',
+      ],
+    ];
+    ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            // 'id',
-            'tools_id',
-            'state_id',
-            'year',
-            'quarter',
-            'param',
-            // 'note',
-            // 'created_at',
-            // 'created_by',
-
-            [
-              'attribute'=>'updated_at',
-              'headerOptions' => [
-                  'style' => 'width:125px;',
-                  'class' => 'text-center',
-              ],
-              'contentOptions' => [
-                  'class' => 'text-center',
-              ],
-              'filter'=>false,
-              'format'=>['date','php:d/m/y H:i'],
-            ],
-            [
-              'attribute'=>'updated_by',
-              'headerOptions' => [
-                  'style' => 'width:100px;',
-                  'class' => 'text-center',
-              ],
-              'contentOptions' => [
-                  'class' => 'text-center',
-              ],
-              'filter'=>false,
-              'value'=>function($data){
-                  return @\app\models\User::findOne($data->updated_by)->username;
-              }
-            ],
-            [
-              'class' => 'yii\grid\ActionColumn',
-              'header' => 'Actions',
-              'headerOptions' => [
-                  'style' => 'width:100px;',
-                  'class' => 'text-center',
-              ],
-              'contentOptions' => [
-                  'class' => 'text-center',
-              ],
-            ],
-        ],
+        'columns' => $columns,
     ]); ?>
 
     </div>

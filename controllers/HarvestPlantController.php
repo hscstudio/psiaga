@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Plant;
+use app\models\TypePlant;
 use app\models\HarvestPlant;
 use app\models\HarvestPlantSearch;
 use yii\web\Controller;
@@ -32,7 +34,13 @@ class HarvestPlantController extends Controller
      */
     public function actionIndex()
     {
+        $state_id = Yii::$app->user->identity->state_id;
         $searchModel = new HarvestPlantSearch();
+        if($state_id>0){
+            $searchModel = new HarvestPlantSearch([
+              'state_id'=>$state_id
+            ]);
+        }
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -58,15 +66,27 @@ class HarvestPlantController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($plant_id=0)
     {
         $model = new HarvestPlant();
-
+        $model->state_id = Yii::$app->user->identity->state_id;
+        $model->year = date('Y');
+        if(in_array(date('m'),[10,11,12])) $model->quarter = 4;
+        if(in_array(date('m'),[ 7, 8, 9])) $model->quarter = 3;
+        if(in_array(date('m'),[ 4, 5, 6])) $model->quarter = 2;
+        if(in_array(date('m'),[ 1, 2, 1])) $model->quarter = 1;
+        $typePlant = null;
+        if($plant_id>0){
+          $plant = Plant::findOne($plant_id);
+          $typePlant = TypePlant::findOne($plant->type_plant_id);
+          $model->plant_id = $plant_id;
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'typePlant' => $typePlant,
             ]);
         }
     }
@@ -80,12 +100,17 @@ class HarvestPlantController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $typePlant = null;
+        if($model->plant_id>0){
+          $plant = Plant::findOne($model->plant_id);
+          $typePlant = TypePlant::findOne($plant->type_plant_id);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'typePlant' => $typePlant,
             ]);
         }
     }

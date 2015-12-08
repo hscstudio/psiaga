@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\widgets\SwitchInput;
+use kartik\widgets\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\modules\administrator\models\User */
@@ -23,6 +24,26 @@ use kartik\widgets\SwitchInput;
   			'offText' => 'Banned',
   		]
   	]) ?>
+
+    <?php
+    $data = \yii\helpers\ArrayHelper::map(
+      \app\models\State::find()
+        ->select([
+          'id','name'
+        ])
+        ->asArray()
+        ->all(), 'id', 'name');
+
+    echo $form->field($model, 'state_id')->widget(Select2::classname(), [
+      'data' => $data,
+      'options' => [
+        'placeholder' => 'Pilih State ...',
+        //'disabled'=>(!$model->isNewRecord)?true:false,
+      ],
+      'pluginOptions' => [
+        'allowClear' => true,
+      ],
+    ]); ?>
 
     <?php if (!$model->isNewRecord){ ?>
       <strong> Biarkan kosong jika tidak ingin mengubah password</strong>

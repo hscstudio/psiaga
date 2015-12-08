@@ -53,9 +53,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $items=[
-            ['label' => 'User', 'url' => ['/mimin/user']],
-            ['label' => 'Role', 'url' => ['/mimin/role']],
-            ['label' => 'Route', 'url' => ['/mimin/route']],
+            ['label' => 'User', 'url' => ['/mimin/user/index']],
+            ['label' => 'Role', 'url' => ['/mimin/role/index']],
+            ['label' => 'Route', 'url' => ['/mimin/route/index']],
         ];
         $items = Mimin::filterRouteMenu($items);
         if(count($items)>0){

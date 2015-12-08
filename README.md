@@ -108,13 +108,13 @@ For security purpose
 --------------------
 
 1) Asumsi Folder aplikasi anda disini
-`C:/xampp/htdocs/saham`
+`C:/xampp/htdocs/siaga`
 
 2) Pindahkan (cut) folder aplikasi anda ke luar dari htdocs, misal
-`C:/xampp/saham`
+`C:/xampp/siaga`
 
 3) Copy folder web yang ada didalam folder aplikasi anda ke htdocs, misal
-copy folder `C:/xampp/saham/web`  (ingat folder web aja)
+copy folder `C:/xampp/siaga/web`  (ingat folder web aja)
 paste ke `C:/xampp/htdocs`
 
 Sehingga di posisi folder web ada di 
@@ -123,10 +123,10 @@ Sehingga di posisi folder web ada di
 4) Lalu buka file index.php didalam folder web tsb.. sesuaikan variabel $coreAppDir mengaarah ke 
 folder aplikasi..
 ```php
-$coreAppDir = '/../../saham';
+$coreAppDir = '/../../siaga';
 ```
 
 5) Anda boleh merename folder web itu.. misal dari web menjadi saham
-`C:/xampp/htdocs/saham/`
+`C:/xampp/htdocs/siaga/`
 
-6) Sehingga untuk mengaksesnya http://localhost/saham
+6) Sehingga untuk mengaksesnya http://localhost/siaga
