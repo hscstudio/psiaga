@@ -23,25 +23,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'type_tools_id',
             'name',
-            'unit',
             'sort',
 
           [
             'attribute'=>'created_at',
             'format'=>['date','php:d M Y H:i:s'],
           ],
-          
+
           [
             'attribute'=>'created_by',
             'value'=>@\app\models\User::findOne($model->created_by)->username,
           ],
-          
+
           [
             'attribute'=>'updated_at',
             'format'=>['date','php:d M Y H:i:s'],
           ],
-          
+
           [
             'attribute'=>'updated_by',
             'value'=>@\app\models\User::findOne($model->updated_by)->username,

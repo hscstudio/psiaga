@@ -63,9 +63,9 @@ class TypePlant extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'params' => Yii::t('app', 'Params'),
-            'units' => Yii::t('app', 'Units'),
+            'name' => Yii::t('app', 'Nama'),
+            'params' => Yii::t('app', 'Parameter'),
+            'units' => Yii::t('app', 'Satuan'),
             'sort' => Yii::t('app', 'Sort'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

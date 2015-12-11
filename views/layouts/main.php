@@ -32,7 +32,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Siaga',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-default navbar-fixed-top',
@@ -63,11 +63,12 @@ AppAsset::register($this);
         }
 
         $items = [
-            ['label' => 'State', 'url' => ['/state/index']],
-            ['label' => 'Type Plant', 'url' => ['/type-plant/index']],
-            ['label' => 'Plant', 'url' => ['/plant/index']],
-            ['label' => 'Tools', 'url' => ['/tools/index']],
-            ['label' => 'Education', 'url' => ['/education/index']],
+            ['label' => 'Kecamatan', 'url' => ['/state/index']],
+            ['label' => 'Jenis Tanaman', 'url' => ['/type-plant/index']],
+            ['label' => 'Tanaman', 'url' => ['/plant/index']],
+            ['label' => 'Jenis Alat Pertanian', 'url' => ['/type-tools/index']],
+            ['label' => 'Alat Pertanian', 'url' => ['/tools/index']],
+            ['label' => 'Pendidikan', 'url' => ['/education/index']],
             //'<hr>',
         ];
         $items = Mimin::filterRouteMenu($items);
@@ -76,9 +77,9 @@ AppAsset::register($this);
         }
 
         $items = [
-            ['label' => 'Harvest Plant', 'url' => ['/harvest-plant/index']],
-            ['label' => 'Harvest Tools', 'url' => ['/harvest-tools/index']],
-            ['label' => 'Farmer Education', 'url' => ['/farmer-education/index']],
+            ['label' => 'Data Panen', 'url' => ['/harvest-plant/index']],
+            ['label' => 'Data Alat Pertanian', 'url' => ['/harvest-tools/index']],
+            ['label' => 'Data Pendidikan', 'url' => ['/farmer-education/index']],
         ];
         $items = Mimin::filterRouteMenu($items);
         if(count($items)>0){
@@ -86,7 +87,9 @@ AppAsset::register($this);
         }
 
         $items = [
-
+            ['label' => 'Laporan Hasil Panen', 'url' => ['/harvest-plant-report/index']],
+            ['label' => 'Laporan Alat Pertanian', 'url' => ['/harvest-tools-report/index']],
+            ['label' => 'Laporan Pendidikan Petani', 'url' => ['/farmer-education-report/index']],
         ];
         $items = Mimin::filterRouteMenu($items);
         if(count($items)>0){
@@ -136,7 +139,7 @@ Modal::end();
 
 <footer class="footer">
     <div class="container-fluid">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Pemerintah Kabupaten Hulu Sungai Selatan <?= date('Y') ?></p>
 
         <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
     </div>

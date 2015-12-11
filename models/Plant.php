@@ -63,8 +63,8 @@ class Plant extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'type_plant_id' => Yii::t('app', 'Type Plant ID'),
-            'name' => Yii::t('app', 'Name'),
+            'type_plant_id' => Yii::t('app', 'Jenis Tanaman'),
+            'name' => Yii::t('app', 'Nama Tanaman'),
             'sort' => Yii::t('app', 'Sort'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

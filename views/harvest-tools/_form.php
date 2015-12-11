@@ -77,17 +77,43 @@ use app\models\State;
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-md-2">
-      <?= $form->field($model, 'param')->textInput()->label('Jumlah') ?>
-      </div>
-      <div class="col-md-2">
-        <br>
-        <?= $tools->unit ?>
-      </div>
-    </div>
-
-    <?= $form->field($model, 'note')->textInput(['maxlength' => true]) ?>
+    <?php
+    $params = explode('|', $typeTools->params);
+    $units = explode('|', $typeTools->units);
+    if(count($params)>0 and count($units)>0 and count($params)==count($units)){
+        $combines = array_combine($params, $units);
+        ?>
+        <table class="table">
+          <tr>
+            <th style="width:20px;">No</th>
+            <th style="width:20%;">Parameter</th>
+            <th style="width:15%;">Jumlah</th>
+            <th style="width:15%;">Satuan</th>
+            <th>Keterangan</th>
+          </tr>
+          <tbody>
+          <?php
+          $idx = 1;
+          foreach ($combines as $param => $unit) {
+            echo "<tr>";
+            echo "<td>".$idx."</td>";
+            echo "<td>".$param."</td>";
+            echo "<td>";
+            echo $form->field($model, 'param'.$idx)->textInput()->label(false);
+            echo "</td>";
+            echo "<td>".$unit."</td>";
+            echo "<td>";
+            echo $form->field($model, 'note'.$idx)->textInput()->label(false);
+            echo "</td>";
+            echo "</tr>";
+            $idx++;
+          }
+          ?>
+        </tbody>
+        </table>
+        <?php
+    }
+    ?>
 
     <div class="form-group">
         <?= Html::a('<span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span> Back', ['index'], ['class' => 'btn btn-default']) ?>

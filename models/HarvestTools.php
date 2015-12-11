@@ -58,7 +58,7 @@ class HarvestTools extends \yii\db\ActiveRecord
             [['tools_id', 'state_id', 'year', 'quarter', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['param'], 'number'],
             [['note'], 'string', 'max' => 255],
-            [['tools_id', 'state_id', 'year', 'quarter'], 'unique', 'targetAttribute' => ['tools_id', 'state_id', 'year', 'quarter'], 'message' => 'The combination of Tools ID, State ID, Year and Quarter has already been taken.'],
+            [['tools_id', 'state_id', 'year', 'quarter'], 'unique', 'targetAttribute' => ['tools_id', 'state_id', 'year', 'quarter'], 'message' => 'The combination of Type Tools ID, State ID, Year and Quarter has already been taken.'],
             [['tools_id'], 'exist', 'skipOnError' => true, 'targetClass' => Tools::className(), 'targetAttribute' => ['tools_id' => 'id']],
             [['state_id'], 'exist', 'skipOnError' => true, 'targetClass' => State::className(), 'targetAttribute' => ['state_id' => 'id']],
         ];
@@ -71,12 +71,12 @@ class HarvestTools extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'tools_id' => Yii::t('app', 'Tools ID'),
-            'state_id' => Yii::t('app', 'State ID'),
-            'year' => Yii::t('app', 'Year'),
-            'quarter' => Yii::t('app', 'Quarter'),
+            'tools_id' => Yii::t('app', 'Alat Pertanian'),
+            'state_id' => Yii::t('app', 'Kecamatan'),
+            'year' => Yii::t('app', 'Tahun'),
+            'quarter' => Yii::t('app', 'Triwulan'),
             'param' => Yii::t('app', 'Param'),
-            'note' => Yii::t('app', 'Note'),
+            'note' => Yii::t('app', 'Keterangan'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_at' => Yii::t('app', 'Updated At'),

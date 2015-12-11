@@ -36,7 +36,7 @@ yii.validation = (function ($) {
             }
         },
 
-        boolean: function (value, messages, options) {
+        'boolean': function (value, messages, options) {
             if (options.skipOnEmpty && pub.isEmpty(value)) {
                 return;
             }
@@ -161,7 +161,7 @@ yii.validation = (function ($) {
 
             var inArray = true;
 
-            $.each($.isArray(value) ? value : [value], function(i, v) {
+            $.each($.isArray(value) ? value : [value], function (i, v) {
                 if ($.inArray(v, options.range) == -1) {
                     inArray = false;
                     return false;
@@ -192,17 +192,30 @@ yii.validation = (function ($) {
 
             var valid = true;
 
-            if (options.enableIDN) {
-                var regexp = /^(.*<?)(.*)@(.*)(>?)$/,
-                    matches = regexp.exec(value);
-                if (matches === null) {
+
+            var regexp = /^((?:"?([^"]*)"?\s)?)(?:\s+)?(?:(<?)((.+)@([^>]+))(>?))$/,
+                matches = regexp.exec(value);
+
+            if (matches === null) {
+                valid = false
+            } else {
+                if (options.enableIDN) {
+                    matches[5] = punycode.toASCII(matches[5]);
+                    matches[6] = punycode.toASCII(matches[6]);
+
+                    value = matches[1] + matches[3] + matches[5] + '@' + matches[6] + matches[7];
+                }
+
+                if (matches[5].length > 64 || matches[1].length > 64) {
+                    valid = false;
+                } else if ((matches[5] + '@' + matches[6]).length > 254) {
                     valid = false;
                 } else {
-                    value = matches[1] + punycode.toASCII(matches[2]) + '@' + punycode.toASCII(matches[3]) + matches[4];
+                    valid = value.match(options.pattern) || (options.allowName && value.match(options.fullPattern));
                 }
             }
 
-            if (!valid || !(value.match(options.pattern) || (options.allowName && value.match(options.fullPattern)))) {
+            if (!valid) {
                 pub.addMessage(messages, options.message, value);
             }
         },
@@ -312,6 +325,54 @@ yii.validation = (function ($) {
 
             if (!valid) {
                 pub.addMessage(messages, options.message, value);
+            }
+        },
+
+        ip: function (value, messages, options) {
+            var getIpVersion = function (value) {
+                return value.indexOf(':') === -1 ? 4 : 6;
+            };
+
+            var negation = null, cidr = null;
+
+            if (options.skipOnEmpty && pub.isEmpty(value)) {
+                return;
+            }
+
+            var matches = new RegExp(options.ipParsePattern).exec(value);
+            if (matches) {
+                negation = matches[1] || null;
+                value = matches[2];
+                cidr = matches[4] || null;
+            }
+
+            if (options.subnet === true && cidr === null) {
+                pub.addMessage(messages, options.messages.noSubnet, value);
+                return;
+            }
+            if (options.subnet === false && cidr !== null) {
+                pub.addMessage(messages, options.messages.hasSubnet, value);
+                return;
+            }
+            if (options.negation === false && negation !== null) {
+                pub.addMessage(messages, options.messages.wrongIp, value);
+                return;
+            }
+
+            if (getIpVersion(value) == 6) {
+                if (!options.ipv6) {
+                    pub.addMessage(messages, options.messages.ipv6NotAllowed, value);
+                }
+                if (!(new RegExp(options.ipv6Pattern)).test(value)) {
+                    pub.addMessage(messages, options.messages.wrongIp, value);
+                }
+            } else {
+                if (!options.ipv4) {
+                    pub.addMessage(messages, options.messages.ipv4NotAllowed, value);
+                }
+                if (!(new RegExp(options.ipv4Pattern)).test(value)) {
+                    pub.addMessage(messages, options.messages.wrongIp, value);
+                }
             }
         }
     };

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Tools;
+use app\models\TypeTools;
 use app\models\HarvestTools;
 use app\models\HarvestToolsSearch;
 use yii\web\Controller;
@@ -76,6 +77,7 @@ class HarvestToolsController extends Controller
         if(in_array(date('m'),[ 1, 2, 1])) $model->quarter = 1;
         if($tools_id>0){
           $tools = Tools::findOne($tools_id);
+          $typeTools = TypeTools::findOne($tools->type_tools_id);
           $model->tools_id = $tools_id;
         }
 
@@ -84,7 +86,7 @@ class HarvestToolsController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'tools' => $tools,
+                'typeTools' => $typeTools,
             ]);
         }
     }
@@ -98,15 +100,17 @@ class HarvestToolsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $typeTools = null;
         if($model->tools_id>0){
           $tools = Tools::findOne($model->tools_id);
+          $typeTools = TypeTools::findOne($tools->type_tools_id);
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
-                'tools' => $tools,
+                'typeTools' => $typeTools,
             ]);
         }
     }

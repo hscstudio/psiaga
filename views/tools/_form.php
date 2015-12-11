@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\widgets\Select2;
+use yii\helpers\ArrayHelper;
+use app\models\TypeTools;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Tools */
@@ -12,9 +15,26 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?php
+    $data = ArrayHelper::map(
+      TypeTools::find()
+        ->select([
+          'id','name',
+        ])
+        ->asArray()
+        ->all(), 'id', 'name');
 
-    <?= $form->field($model, 'unit')->textInput(['maxlength' => true]) ?>
+    echo $form->field($model, 'type_tools_id')->widget(Select2::classname(), [
+      'data' => $data,
+      'options' => [
+        'placeholder' => 'Pilih Type Tools ...',
+      ],
+      'pluginOptions' => [
+        'allowClear' => true,
+      ],
+    ]); ?>
+
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'sort')->textInput() ?>
 

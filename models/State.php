@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $coords
  * @property integer $sort
  * @property integer $created_at
  * @property integer $created_by
@@ -56,6 +57,7 @@ class State extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 50],
+            [['coords'], 'string', 'max' => 500],
         ];
     }
 
@@ -66,7 +68,8 @@ class State extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'name' => Yii::t('app', 'Nama Kecamatan'),
+            'coords' => Yii::t('app', 'Coordinates'),
             'sort' => Yii::t('app', 'Sort'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "tools".
  *
  * @property integer $id
+ * @property integer $type_tools_id
  * @property string $name
- * @property string $unit
  * @property integer $sort
  * @property integer $created_at
  * @property integer $created_by
@@ -51,9 +51,8 @@ class Tools extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['sort', 'type_tools_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 100],
-            [['unit'], 'string', 'max' => 50],
         ];
     }
 
@@ -64,8 +63,8 @@ class Tools extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'unit' => Yii::t('app', 'Unit'),
+            'name' => Yii::t('app', 'Nama Alat Pertanian'),
+            'type_tools_id' => Yii::t('app', 'Jenis Alat Pertanian'),
             'sort' => Yii::t('app', 'Sort'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
@@ -80,5 +79,13 @@ class Tools extends \yii\db\ActiveRecord
     public function getHarvestTools()
     {
         return $this->hasMany(HarvestTools::className(), ['tools_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTypeTools()
+    {
+        return $this->hasOne(TypeTools::className(), ['type_tools_id' => 'id']);
     }
 }

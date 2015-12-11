@@ -18,8 +18,8 @@ class ToolsSearch extends Tools
     public function rules()
     {
         return [
-            [['id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name', 'unit'], 'safe'],
+            [['id', 'type_tools_id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -60,6 +60,7 @@ class ToolsSearch extends Tools
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type_tools_id' => $this->type_tools_id,
             'sort' => $this->sort,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -67,8 +68,7 @@ class ToolsSearch extends Tools
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'unit', $this->unit]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

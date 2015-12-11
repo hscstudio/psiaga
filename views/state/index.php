@@ -23,7 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '<span class=\'glyphicon glyphicon-plus-sign\'></span>  Create State'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<span class=\'glyphicon glyphicon-plus-sign\'></span>  '.Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '<span class=\'glyphicon glyphicon-map-marker\'></span> Map'), ['map'], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= GridView::widget([
@@ -34,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             // 'id',
             'name',
+            //'coords',
             'sort',
             // 'created_at',
             // 'created_by',

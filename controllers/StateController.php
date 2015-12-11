@@ -118,4 +118,41 @@ class StateController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    /**
+     * Displays a single State model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionMap()
+    {
+        $model = State::find()->asArray()->all();
+        return $this->render('map', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionMapDetail($id)
+    {
+        $model = State::find()->where(['id'=>$id])->one();
+        $html = '
+          <h3>Informasi Detail</h3>
+          <table class="table table-striped">
+            <tr>
+              <td>ID</td>
+              <td>'.$model->id.'</td>
+            </tr>
+            <tr>
+              <td>Kecamatan</td>
+              <td>'.$model->name.'</td>
+            </tr>
+            <tr>
+              <td>Coordinates</td>
+              <td>'.$model->coords.'</td>
+            </tr>
+          </table>
+
+        ';
+        return $html;
+    }
 }

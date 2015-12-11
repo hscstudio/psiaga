@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', '<span class=\'glyphicon glyphicon-plus-sign\'></span>  Create Tools'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<span class=\'glyphicon glyphicon-plus-sign\'></span>  '.Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -33,8 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             // 'id',
+            [
+              'attribute' => 'type_tools_id',
+              'format' => 'raw',
+              'value' => function($data){
+                if($data->type_tools_id>0)
+                  return \app\models\TypeTools::findOne($data->type_tools_id)->name;
+                else
+                  return "-";
+              }
+            ],
             'name',
-            'unit',
             'sort',
             // 'created_at',
             // 'created_by',

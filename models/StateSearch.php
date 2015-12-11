@@ -20,6 +20,7 @@ class StateSearch extends State
         return [
             [['id', 'sort', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'safe'],
+            [['coords'], 'safe'],
         ];
     }
 
@@ -68,6 +69,7 @@ class StateSearch extends State
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'coords', $this->name]);
 
         return $dataProvider;
     }

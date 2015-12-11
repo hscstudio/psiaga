@@ -47,7 +47,7 @@ class FarmerEducation extends \yii\db\ActiveRecord
             ],
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
@@ -71,12 +71,12 @@ class FarmerEducation extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'education_id' => Yii::t('app', 'Education ID'),
-            'state_id' => Yii::t('app', 'State ID'),
-            'year' => Yii::t('app', 'Year'),
-            'quarter' => Yii::t('app', 'Quarter'),
+            'education_id' => Yii::t('app', 'Pendidikan'),
+            'state_id' => Yii::t('app', 'Kecamatan'),
+            'year' => Yii::t('app', 'Tahun'),
+            'quarter' => Yii::t('app', 'Triwulan'),
             'param' => Yii::t('app', 'Param'),
-            'note' => Yii::t('app', 'Note'),
+            'note' => Yii::t('app', 'Keterangan'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),
             'updated_at' => Yii::t('app', 'Updated At'),

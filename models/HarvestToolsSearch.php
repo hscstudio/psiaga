@@ -19,8 +19,8 @@ class HarvestToolsSearch extends HarvestTools
     {
         return [
             [['id', 'tools_id', 'state_id', 'year', 'quarter', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['param'], 'number'],
-            [['note'], 'safe'],
+            [['param1','param2','param3','param4','param5',], 'number'],
+            [['note1','note2','note3','note4','note5'], 'safe'],
         ];
     }
 
@@ -65,14 +65,22 @@ class HarvestToolsSearch extends HarvestTools
             'state_id' => $this->state_id,
             'year' => $this->year,
             'quarter' => $this->quarter,
-            'param' => $this->param,
+            'param1' => $this->param1,
+            'param2' => $this->param2,
+            'param3' => $this->param3,
+            'param4' => $this->param4,
+            'param5' => $this->param5,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'note', $this->note]);
+        $query->andFilterWhere(['like', 'note1', $this->note1])
+              ->andFilterWhere(['like', 'note2', $this->note2])
+              ->andFilterWhere(['like', 'note3', $this->note3])
+              ->andFilterWhere(['like', 'note4', $this->note4])
+              ->andFilterWhere(['like', 'note5', $this->note5]);
 
         return $dataProvider;
     }
